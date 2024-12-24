@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Subject-Based Articles</title>
+</head>
+<body>
+    <h2>주제별 논문 목록</h2>
+    {% if userinfo %}
+        <p>주 관심 분야: <strong>{{ userinfo.subject1 }}</strong></p>
+    {% endif %}
+    {% if articles %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>연번</th>
+                    <th>논문제목</th>
+                    <th>저자</th>
+                    <th>대주제분야</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for article in articles %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{{ article.link }}" target="_blank">{{ article.title }}</a></td>
+                        <td>{{ article.author }}</td>
+                        <td>{{ article.subject1 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>해당 주제에 대한 논문이 없습니다.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <div class="bg-body-tertiary">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Navbar</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Link</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Dropdown
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/article/subject">Subject</a>
+                            </li>
+                        </ul>
+                        {% if user_id %}
+                            <p class="pt-3">{{ user_id }}님 환영합니다.</p>
+                            <a href="/user/logout" class="btn btn-outline-success">Logout</a>
+                        {% else %}
+                            <a href="/user/login" class="btn btn-outline-success me-2">Login</a>
+                            <a href="/user/register" class="btn btn-outline-primary">Register</a> <!-- 회원가입 버튼 -->
+                        {% endif %}
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="container mt-5">
+        {% if user_id %}
+            <h4>{{ user_id }}님의 관심사별 최신 논문</h4>
+    
+            <!-- 주 관심 분야 -->
+            <h5>주 관심 분야: {{ userinfo.subject1 }}</h5>
+            {% if articles_subject1 %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>연번</th>
+                            <th>논문제목</th>
+                            <th>저자</th>
+                            <th>대주제분야</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for article in articles_subject1 %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="{{ article.link }}" target="_blank">{{ article.title }}</a></td>
+                                <td>{{ article.author }}</td>
+                                <td>{{ article.subject1 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>주 관심 분야에 해당하는 논문이 없습니다.</p>
+            {% endif %}
+    
+            <!-- 보조 관심 분야 -->
+            <h4>이런 논문은 어떤가요?</h4>
+            {% if articles_subject2 %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>연번</th>
+                            <th>논문제목</th>
+                            <th>저자</th>
+                            <th>대주제분야</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for article in articles_subject2 %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="{{ article.link }}" target="_blank">{{ article.title }}</a></td>
+                                <td>{{ article.author }}</td>
+                                <td>{{ article.subject1 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>보조 관심 분야에 해당하는 논문이 없습니다.</p>
+            {% endif %}
+        {% else %}
+            <p>로그인하지 않았습니다. 로그인 후 관심사에 맞는 최신 논문을 확인할 수 있습니다.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
